@@ -7,10 +7,10 @@ from cert_issuer.models import ServiceProviderConnector
 from web3 import Web3, HTTPProvider
 
 def get_abi(contract):
-    '''
+    """
     Returns smart contract abi.
     possible values for contract: "blockcerts", "ens_registry"
-    '''
+    """
 
     directory = os.path.dirname(os.path.abspath(__file__))
     path = os.path.join(directory, f"data/{contract}_abi.json")
@@ -21,7 +21,9 @@ def get_abi(contract):
     return abi
 
 class EthereumSCServiceProviderConnector(ServiceProviderConnector):
-    '''Collects abi, address, contract data and instantiates a contract object'''
+    """
+    Collects abi, address, contract data and instantiates a contract object
+    """
     def __init__(self, app_config, abi_type="cert_store", contract_address=None, private_key=None):
         self.app_config = app_config
         self._private_key = private_key
@@ -40,21 +42,28 @@ class EthereumSCServiceProviderConnector(ServiceProviderConnector):
         self._contract_obj = self._create_contract_object()
 
     def _create_contract_object(self):
-        '''Returns contract address and abi'''
+        """
+        Returns contract address and abi
+        """
         return self._w3.eth.contract(address=self.address, abi=self.abi)
 
     def get_balance(self, address):
         return self._w3.eth.getBalance(address)
 
     def _get_tx_options(self, estimated_gas):
-        '''Returns raw transaction'''
+        """
+        Returns raw transaction
+        """
         return {
             'nonce': self._w3.eth.getTransactionCount(self._w3.eth.defaultAccount),
             'gas': estimated_gas * 2
         }
 
     def create_transaction(self, method, *argv):
-        estimated_gas = self._contract_obj.functions[method](*argv).estimateGas()
+        try:
+            estimated_gas = self._contract_obj.functions[method](*argv).estimateGas()
+        except ValueError:
+            estimated_gas = 2500.0000
         tx_options = self._get_tx_options(estimated_gas)
         construct_txn = self._contract_obj.functions[method](*argv).buildTransaction(tx_options)
         return construct_txn
@@ -65,12 +74,12 @@ class EthereumSCServiceProviderConnector(ServiceProviderConnector):
         return tx_receipt.transactionHash.hex()
 
     def transact(self, method, *argv):
-        '''
+        """
         Sends a signed transaction on the blockchain and waits for a response.
         If initialized with private key this class can sign the transaction.
         In general, an external signer can be used in conjunction with
             create_transaction() and broadcast_tx.
-        '''
+        """
         if self._private_key == None:
             raise UnableToSignTxError("This method is only available if a private key was passed upon initialization")
 
