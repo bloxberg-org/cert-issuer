@@ -221,7 +221,7 @@ connectors[Chain.ethereum_mainnet] = eth_provider_list
 
 # Configure Ethereum Ropsten testnet connectors
 rop_provider_list = []
-rop_provider_list.append(EtherscanBroadcaster('https://ropsten.etherscan.io/api'))
+rop_provider_list.append(EtherscanBroadcaster('https://blockexplorer.bloxberg.org/api'))
 rop_provider_list.append(MyEtherWalletBroadcaster('https://api.myetherwallet.com/rop'))
 connectors[Chain.ethereum_ropsten] = rop_provider_list
 

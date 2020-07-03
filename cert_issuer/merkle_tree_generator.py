@@ -61,7 +61,7 @@ class MerkleTreeGenerator(object):
                 proof2.append(dict2)
             target_hash = ensure_string(self.tree.get_leaf(index))
             if app_config.issuing_method == "smart_contract":
-                from blockchain_handlers.ethereum_sc.ens import ENSConnector
+                from cert_issuer.blockchain_handlers.ethereum_sc.ens import ENSConnector
 
                 ens = ENSConnector(app_config)
                 abi = ens.get_abi()
