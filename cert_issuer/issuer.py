@@ -2,7 +2,8 @@
 Base class for building blockchain transactions to issue Blockchain Certificates.
 """
 import logging
-
+from eth_utils import is_checksum_address
+from web3 import Web3
 from cert_issuer.errors import BroadcastError
 
 MAX_TX_RETRIES = 5
@@ -21,10 +22,15 @@ class Issuer:
         """
 
         blockchain_bytes = self.certificate_batch_handler.prepare_batch()
+        #Change to parameters that get passed in app.py TODO
+        recipient_address = Web3.toChecksumAddress('0xaA84378fA41da83a9B6523bA46E45A664FbEBFC8')
+        print(is_checksum_address(recipient_address))
+        token_uri = "https://bloxberg.org"
+        blockchain_bytes = str(blockchain_bytes, 'latin-1')
 
         for attempt_number in range(0, self.max_retry):
             try:
-                txid = self.transaction_handler.issue_transaction(blockchain_bytes, app_config)
+                txid = self.transaction_handler.issue_transaction(recipient_address, token_uri, blockchain_bytes, app_config)
                 self.certificate_batch_handler.finish_batch(txid, chain, app_config)
                 logging.info('Broadcast transaction with txid %s', txid)
                 return txid
