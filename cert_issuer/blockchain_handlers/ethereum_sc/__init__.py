@@ -4,7 +4,7 @@ import os
 from cert_core import BlockchainType
 from cert_core import Chain, UnknownChainError
 
-from cert_issuer.certificate_handlers import CertificateBatchHandler, CertificateV2Handler
+from cert_issuer.certificate_handlers import CertificateBatchHandler, CertificateV3Handler
 from cert_issuer.blockchain_handlers.ethereum_sc.connectors import EthereumSCServiceProviderConnector
 from cert_issuer.blockchain_handlers.ethereum_sc.ens import ENSConnector
 from cert_issuer.blockchain_handlers.ethereum_sc.signer import EthereumSCSigner
