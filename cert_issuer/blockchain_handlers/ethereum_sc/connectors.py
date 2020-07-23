@@ -14,7 +14,8 @@ def get_abi(contract):
     """
 
     directory = os.path.dirname(os.path.abspath(__file__))
-    path = os.path.join(directory, f"/home/james/bloxberg-certs/cert-issuer/cert_issuer/blockchain_handlers/ethereum_sc/data/{contract}_abi.json")
+    path = os.path.join(directory, f"data/{contract}_abi.json")
+    print(path)
 
     with open(path, "r") as f:
         raw = f.read()

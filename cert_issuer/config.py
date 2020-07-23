@@ -1,7 +1,7 @@
 import logging
 import os
 
-import bitcoin
+#import bitcoin
 import configargparse
 from cert_core import BlockchainType, Chain, chain_to_bitcoin_network, UnknownChainError
 

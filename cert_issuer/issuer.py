@@ -25,6 +25,7 @@ class Issuer:
         #Change to parameters that get passed in app.py TODO
         recipient_address = Web3.toChecksumAddress('0xaA84378fA41da83a9B6523bA46E45A664FbEBFC8')
         print(is_checksum_address(recipient_address))
+	#change token_uri address
         token_uri = "https://bloxberg.org"
         blockchain_bytes = str(blockchain_bytes, 'latin-1')
 
