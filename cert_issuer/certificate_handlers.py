@@ -47,9 +47,10 @@ class CertificateWebV3Handler(CertificateHandler):
 
 
 class CertificateBatchWebHandler(BatchHandler):
+    #Smart contract version has app_config as variable - removed in V3
     def finish_batch(self, tx_id, chain, app_config):
         self.proof = []
-        proof_generator = self.merkle_tree.get_proof_generator(tx_id, self.config.verification_method, chain)
+        proof_generator = self.merkle_tree.get_proof_generator(tx_id, app_config, self.config.verification_method, chain)
         for metadata in self.certificates_to_issue:
             proof = next(proof_generator)
             self.proof.append(self.certificate_handler.add_proof(metadata, proof))
@@ -119,8 +120,8 @@ class CertificateBatchHandler(BatchHandler):
             data_to_issue = self.certificate_handler.get_byte_array_to_issue(metadata)
             yield data_to_issue
 
-    def finish_batch(self, tx_id, chain):
-        proof_generator = self.merkle_tree.get_proof_generator(tx_id, self.config.verification_method, chain)
+    def finish_batch(self, tx_id, chain, app_config):
+        proof_generator = self.merkle_tree.get_proof_generator(tx_id, app_config, self.config.verification_method, chain)
         for _, metadata in self.certificates_to_issue.items():
             proof = next(proof_generator)
             self.certificate_handler.add_proof(metadata, proof)

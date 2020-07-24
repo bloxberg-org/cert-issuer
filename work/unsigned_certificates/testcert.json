@@ -1,27 +1,18 @@
 {
-   "@context":[
-      "https://www.w3.org/2018/credentials/v1",
-      "https://w3id.org/blockcerts/schema/3.0-alpha/context.json",
-      "https://www.w3.org/2018/credentials/examples/v1"
-   ],
-   "type":[
-      "VerifiableCredential",
-      "BlockcertsCredential"
-   ],
-   "issuer":"https://raw.githubusercontent.com/AnthonyRonning/https-github.com-labnol-files/master/issuer-eth.json",
-   "issuanceDate":"2020-03-27T19:33:48.260278+00:00",
-   "id":"urn:uuid:ea856760-c1e9-4243-8e95-1a36c70f9615",
-   "credentialSubject":{
-      "id":"ecdsa-koblitz-pubkey:mkwntSiQmc14H65YxwckLenxY3DsEpvFbe",
-      "alumniOf":{
-         "id":"https://www.issuer.org"
-      }
-   },
-   "proof":{
-      "type":"MerkleProof2019",
-      "created":"2020-03-27T14:34:08.976994",
-      "proofValue":"zG7NYSuZNW6m3AqhgaP3kTHowuF5vwFNeVaNGisY5KQckwVZCf1Ze6QUeEghjGN1va4WVq9HBamzEFG4gq6AUxWrn6728njszRaXudPjGFbjAzNMpuRd6Bb27XzKzygXUEk4uPRPtKSr78Aibka5gMNmTf8LhWSsfNB6DdQVoUVc9tM1ctBy2jXY2sL5YDt1it66RhgRdirCaj8tUDhAfXMoe14DTyJvDDZgQmpYNtFqhrg7d71raPFPmo4AgHpFipGLs3NjxrSoBd29ex6Fae3rJAwHWHp173chNrXuvGDT99M2YxJqnxnr4LitxrGz39V57QrC5x4WqqpB1osMnKzfUHgtxetvzkKStuTzZsCLhFrZT7eSjrjy9wuU4er1dzk3nN23A1cDpWWFQM7mw79Rs8tv4U7As6r9wvUjm7VSRhfH9ur2qJxVbwBgEs7WDhmrbMeF7demEmKcU5Fq91JZRowXouyz6cGxWHb4QhLTHhtcQMx34",
-      "proofPurpose":"assertionMethod",
-      "verificationMethod":"ecdsa-koblitz-pubkey:0x7e30a37763e6Ba1fFeDE1750bBeFB4c60b17a1B3"
-   }
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1"
+  ],
+  "id": "urn:uuid:bbba8553-8ec1-445f-82c9-a57251dd731c",
+  "type": [
+    "VerifiableCredential",
+    "BlockcertsCredential"
+  ],
+  "issuer": "did:example:23adb1f712ebc6f1c276eba4dfa",
+  "issuanceDate": "2010-01-01T19:33:24Z",
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "alumniOf": {
+      "id": "did:example:c276e12ec21ebfeb1f712ebc6f1"
+    }
+  }
 }

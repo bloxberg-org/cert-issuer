@@ -47,11 +47,7 @@ class TestMerkleTreeGenerator(unittest.TestCase):
         merkle_tree_generator.populate(get_test_data_generator())
         _ = merkle_tree_generator.get_blockchain_data()
         gen = merkle_tree_generator.get_proof_generator(
-<<<<<<< HEAD
-            '8087c03e7b7bc9ca7b355de9d9d8165cc5c76307f337f0deb8a204d002c8e582', app_config, chain)
-=======
             '8087c03e7b7bc9ca7b355de9d9d8165cc5c76307f337f0deb8a204d002c8e582', 'http://example.com', chain)
->>>>>>> 24a4f4f8ff202e51b77cc585b128ce9d862d49e2
         p1 = next(gen)
         _ = next(gen)
         p3 = next(gen)

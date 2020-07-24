@@ -82,8 +82,9 @@ def instantiate_blockchain_handlers(app_config):
     chain = app_config.chain
     secret_manager = initialize_signer(app_config)
     certificate_batch_handler = CertificateBatchHandler(secret_manager=secret_manager,
-                                                        certificate_handler=CertificateV2Handler(),
-                                                        merkle_tree=MerkleTreeGenerator())
+                                                        certificate_handler=CertificateV3Handler(),
+                                                        merkle_tree=MerkleTreeGenerator(),
+                                                        config=app_config)
     if chain == Chain.mockchain:
         transaction_handler = MockTransactionHandler()
     # ethereum chains
