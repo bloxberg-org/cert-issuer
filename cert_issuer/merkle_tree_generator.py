@@ -78,7 +78,11 @@ class MerkleTreeGenerator(object):
                 merkle_json = {
                     "path": proof2,
                     "merkleRoot": root,
-                    "targetHash": target_hash
+                    "targetHash": target_hash,
+                    #Possibly adjust anchor to merkle_proof dict
+                    "anchors": [
+                        helpers.tx_to_blink(chain, tx_id)
+                    ]
                     }
                 logging.info('merkle_json: %s', str(merkle_json))
 
@@ -88,16 +92,20 @@ class MerkleTreeGenerator(object):
                     "created": datetime.now().isoformat(),
                     "proofValue": proof_value.decode('utf8'),
                     "proofPurpose": "assertionMethod",
-                    "verificationMethod": verification_method,
-                    "anchors": [{
-                        #helpers.tx_to_blink(chain, tx_id),
-                        "sourceId": to_source_id(tx_id, chain),
-                        "type": "ETHSmartContract",
-                        "contract_address": app_config.contract_address,
-                        "ens_name": app_config.ens_name,
-                        "contract_abi": abi
-                    }]
+                    "verificationMethod": verification_method
                 }
+                #Uncomment after checking verification
+                """
+                "anchors": [{
+                    #helpers.tx_to_blink(chain, tx_id),
+                    "sourceId": to_source_id(tx_id, chain),
+                    "type": "ETHSmartContract",
+                    "contract_address": app_config.contract_address,
+                    "ens_name": app_config.ens_name,
+                    "contract_abi": abi
+                }]
+                """
+                
             else:
                 mp2019 = MerkleProof2019()
                 merkle_json = {

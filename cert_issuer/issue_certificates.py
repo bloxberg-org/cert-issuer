@@ -11,7 +11,7 @@ if sys.version_info.major < 3:
     sys.exit(1)
 
 
-def issue(app_config, certificate_batch_handler, transaction_handler):
+def issue(app_config, certificate_batch_handler, transaction_handler, recipient_address):
     certificate_batch_handler.pre_batch_actions(app_config)
 
     transaction_handler.ensure_balance()
@@ -20,7 +20,7 @@ def issue(app_config, certificate_batch_handler, transaction_handler):
         certificate_batch_handler=certificate_batch_handler,
         transaction_handler=transaction_handler,
         max_retry=app_config.max_retry)
-    tx_id = issuer.issue(app_config.chain, app_config)
+    tx_id = issuer.issue(app_config.chain, app_config, recipient_address)
 
     certificate_batch_handler.post_batch_actions(app_config)
     return tx_id

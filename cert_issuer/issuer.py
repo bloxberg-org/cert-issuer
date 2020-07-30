@@ -15,20 +15,20 @@ class Issuer:
         self.transaction_handler = transaction_handler
         self.max_retry = max_retry
 
-    def issue(self, chain, app_config):
+    def issue(self, chain, app_config, recipient_address):
         """
         Issue the certificates on the blockchain
         :return:
         """
 
         blockchain_bytes = self.certificate_batch_handler.prepare_batch()
-        #Change to parameters that get passed in app.py TODO
-        recipient_address = Web3.toChecksumAddress('0xaA84378fA41da83a9B6523bA46E45A664FbEBFC8')
+        
+        recipient_address = Web3.toChecksumAddress(recipient_address)
         print(is_checksum_address(recipient_address))
-	#change token_uri address
+	    #change token_uri address
         token_uri = "https://bloxberg.org"
-        blockchain_bytes = str(blockchain_bytes, 'latin-1')
-
+        #blockchain_bytes = str(blockchain_bytes, 'latin-1')
+        blockchain_bytes = blockchain_bytes.hex()
         for attempt_number in range(0, self.max_retry):
             try:
                 txid = self.transaction_handler.issue_transaction(recipient_address, token_uri, blockchain_bytes, app_config)
