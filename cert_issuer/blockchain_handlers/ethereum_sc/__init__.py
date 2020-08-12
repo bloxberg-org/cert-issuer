@@ -88,7 +88,7 @@ def instantiate_blockchain_handlers(app_config):
     if chain == Chain.mockchain:
         transaction_handler = MockTransactionHandler()
     # ethereum chains
-    elif chain == Chain.ethereum_mainnet or chain == Chain.ethereum_ropsten:
+    elif chain == Chain.ethereum_mainnet or chain == Chain.ethereum_bloxberg:
         cost_constants = EthereumTransactionCostConstants(app_config.gas_price, app_config.gas_limit)
         connector = instantiate_connector(app_config, cost_constants)
         transaction_handler = EthereumSCTransactionHandler(connector, cost_constants, secret_manager,

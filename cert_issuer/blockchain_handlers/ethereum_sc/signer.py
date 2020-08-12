@@ -13,7 +13,7 @@ class EthereumSCSigner(Signer):
         # Netcode ensures replay protection (see EIP155)
         if ethereum_chain.external_display_value == 'ethereumMainnet':
             self.netcode = 8995
-        elif ethereum_chain.external_display_value == 'ethereumRopsten':
+        elif ethereum_chain.external_display_value == 'ethereumBloxberg':
             self.netcode = 8995
         else:
             self.netcode = None

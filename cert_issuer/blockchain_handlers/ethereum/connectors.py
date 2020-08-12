@@ -224,11 +224,11 @@ eth_provider_list.append(EtherscanBroadcaster('https://api.etherscan.io/api'))
 eth_provider_list.append(MyEtherWalletBroadcaster('https://api.myetherwallet.com/eth'))
 connectors[Chain.ethereum_mainnet] = eth_provider_list
 
-# Configure Ethereum Ropsten testnet connectors
+# Configure Ethereum Bloxberg testnet connectors
 rop_provider_list = []
 rop_provider_list.append(EtherscanBroadcaster('https://blockexplorer.bloxberg.org/api'))
 rop_provider_list.append(MyEtherWalletBroadcaster('https://api.myetherwallet.com/rop'))
-connectors[Chain.ethereum_ropsten] = rop_provider_list
+connectors[Chain.ethereum_bloxberg] = rop_provider_list
 
 
 def get_providers_for_chain(chain, local_node=False):

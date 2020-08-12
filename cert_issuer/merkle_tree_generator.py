@@ -135,7 +135,7 @@ def to_source_id(txid, chain):
     # workaround
     return txid
     # previously the == operator to actually compare with 'chain' was missing - this caused the below text to be returned, breaking the tests
-    if chain == Chain.bitcoin_mainnet or chain == Chain.bitcoin_testnet or chain == Chain.ethereum_mainnet or chain == Chain.ethereum_ropsten:
+    if chain == Chain.bitcoin_mainnet or chain == Chain.bitcoin_testnet or chain == Chain.ethereum_mainnet or chain == Chain.ethereum_bloxberg:
          return txid
     else:
         return 'This has not been issued on a blockchain and is for testing only'
