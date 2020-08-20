@@ -75,6 +75,7 @@ class MerkleTreeGenerator(object):
                 abi = ens.get_abi()
 
                 mp2019 = MerkleProof2019()
+                print(helpers.tx_to_blink(chain, tx_id))
                 merkle_json = {
                     "path": proof2,
                     "merkleRoot": root,
@@ -83,7 +84,7 @@ class MerkleTreeGenerator(object):
                     "anchors": [
                         helpers.tx_to_blink(chain, tx_id)
                     ]
-                    }
+                }
                 logging.info('merkle_json: %s', str(merkle_json))
 
                 proof_value = mp2019.encode(merkle_json)
@@ -92,7 +93,9 @@ class MerkleTreeGenerator(object):
                     "created": datetime.now().isoformat(),
                     "proofValue": proof_value.decode('utf8'),
                     "proofPurpose": "assertionMethod",
-                    "verificationMethod": verification_method
+                    "verificationMethod": verification_method,
+                    #Add ENS name for issuer validation
+                    "ens_name": app_config.ens_name
                 }
                 #Uncomment after checking verification
                 """

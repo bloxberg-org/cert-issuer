@@ -34,6 +34,7 @@ class Issuer:
                 txid = self.transaction_handler.issue_transaction(recipient_address, token_uri, blockchain_bytes, app_config)
                 self.certificate_batch_handler.finish_batch(txid, chain, app_config)
                 logging.info('Broadcast transaction with txid %s', txid)
+
                 return txid
             except BroadcastError:
                 logging.warning(
@@ -41,3 +42,10 @@ class Issuer:
                     attempt_number)
         logging.error('All attempts to broadcast failed. Try rerunning issuer.')
         raise BroadcastError('All attempts to broadcast failed. Try rerunning issuer.')
+
+    def updateIPFS(self, chain, app_config):
+        """
+        Update IPFS link on smart contract
+        """
+        txid = self.transaction_handler.ipfs_transaction(token_id, token_uri, blockchain_bytes, app_config)
+

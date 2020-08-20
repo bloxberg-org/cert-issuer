@@ -52,7 +52,7 @@ class EthereumSCServiceProviderConnector(ServiceProviderConnector):
         gas_limit = self.cost_constants.get_gas_limit()
         estimated_gas = self._contract_obj.functions[method](*argv).estimateGas() * 5
         if estimated_gas > gas_limit:
-            logging.warning("Estimated gas of %s more than gas limit of %s, transaction might fail. Please verify on etherescan.com.", estimated_gas, gas_limit)
+            logging.warning("Estimated gas of %s more than gas limit of %s, transaction might fail. Please verify on blockexplorer.bloxberg.org.", estimated_gas, gas_limit)
             estimated_gas = gas_limit
 
         gas_price = self._w3.eth.gasPrice
@@ -80,6 +80,12 @@ class EthereumSCServiceProviderConnector(ServiceProviderConnector):
         tx_hash = self._w3.eth.sendRawTransaction(signed_tx.rawTransaction)
         tx_receipt = self._w3.eth.waitForTransactionReceipt(tx_hash)
         return tx_receipt.transactionHash.hex()
+
+    def get_tokenID(self, txid):
+        tx_receipt = receipt = self._w3.eth.getTransactionReceipt(txid)
+        logs = self._contract_obj.events.Transfer().processReceipt(tx_receipt)
+        tokenID = logs[0]['args']['tokenId']
+        return tokenID
 
     def transact(self, method, *argv):
         """

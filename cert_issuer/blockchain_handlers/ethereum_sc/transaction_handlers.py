@@ -45,6 +45,18 @@ class EthereumSCTransactionHandler(TransactionHandler):
         txid = self.broadcast_transaction(signed_tx)
         return txid
 
+    def ipfs_transaction(self, token_id, token_uri, blockchain_bytes, app_config):
+        return self.update_ipfs(token_id, token_uri, blockchain_bytes, app_config, "updateTokenURI")
+
+    def update_ipfs(self, token_id, token_uri, blockchain_bytes, app_config):
+        prepared_tx = self.connector.create_transaction(method, token_id, token_uri, blockchain_bytes)
+        signed_tx = self.sign_transaction(prepared_tx)
+
+        logging.info('Updating tokenURI field with ipfs link..')
+
+        txid = self.broadcast_transaction(signed_tx)
+        return txid
+
     def sign_transaction(self, prepared_tx):
         # stubbed from BitcoinTransactionHandler
 
@@ -57,3 +69,5 @@ class EthereumSCTransactionHandler(TransactionHandler):
     def broadcast_transaction(self, signed_tx):
         txid = self.connector.broadcast_tx(signed_tx)
         return txid
+
+
