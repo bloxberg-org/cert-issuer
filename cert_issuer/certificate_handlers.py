@@ -1,7 +1,7 @@
 import json
 import logging
 
-from cert_schema import normalize_jsonld
+from cert_schema import normalize_jsonld, validate_v3_alpha
 from cert_issuer import helpers
 from pycoin.serialize import b2h
 from cert_issuer.models import CertificateHandler, BatchHandler
@@ -31,6 +31,15 @@ class CertificateV3Handler(CertificateHandler):
             certificate_json = json.load(unsigned_cert_file)
         return certificate_json
 
+    def validate_certificate(self, certificate_metadata):
+        certificate_json = self._get_certificate_to_issue(certificate_metadata)
+        return validate_v3_alpha(certificate_json)
+
+    def sign_certificate(self, signer, certificate_metadata):
+        # TODO
+        return self.sign_certificate(signer, certificate_metadata)
+
+
 class CertificateWebV3Handler(CertificateHandler):
     def get_byte_array_to_issue(self, certificate_json):
         normalized = normalize_jsonld(certificate_json, detect_unmapped_fields=False)
@@ -44,6 +53,14 @@ class CertificateWebV3Handler(CertificateHandler):
         """
         certificate_json['signature'] = merkle_proof
         return certificate_json
+
+    def validate_certificate(self, certificate_metadata):
+        certificate_json = self._get_certificate_to_issue(certificate_metadata)
+        return validate_v3_alpha(certificate_json)
+
+    def sign_certificate(self, signer, certificate_metadata):
+        # TODO
+        return self.sign_certificate(signer, certificate_metadata)
 
 
 class CertificateBatchWebHandler(BatchHandler):
