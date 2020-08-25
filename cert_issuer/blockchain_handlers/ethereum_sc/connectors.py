@@ -81,12 +81,6 @@ class EthereumSCServiceProviderConnector(ServiceProviderConnector):
         tx_receipt = self._w3.eth.waitForTransactionReceipt(tx_hash)
         return tx_receipt.transactionHash.hex()
 
-    def get_tokenID(self, txid):
-        tx_receipt = receipt = self._w3.eth.getTransactionReceipt(txid)
-        logs = self._contract_obj.events.Transfer().processReceipt(tx_receipt)
-        tokenID = logs[0]['args']['tokenId']
-        return tokenID
-
     def transact(self, method, *argv):
         """
         Sends a signed transaction on the blockchain and waits for a response.
@@ -113,3 +107,9 @@ class EthereumSCServiceProviderConnector(ServiceProviderConnector):
 
     def call(self, method, *argv):
         return self._contract_obj.functions[method](*argv).call()
+
+    def get_event_args(self, tx_hash, event):
+        tx_receipt = self._w3.eth.getTransactionReceipt(tx_hash)
+        logs = self._contract_obj.events[event]().processReceipt(tx_receipt)
+        return logs[0]['args']
+

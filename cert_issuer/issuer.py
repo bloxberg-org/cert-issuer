@@ -32,10 +32,12 @@ class Issuer:
         for attempt_number in range(0, self.max_retry):
             try:
                 txid = self.transaction_handler.issue_transaction(recipient_address, token_uri, blockchain_bytes, app_config)
+                event_args = self.transaction_handler.get_event_args(txid, 'Transfer')
+                token_id = event_args['tokenId']
+
                 self.certificate_batch_handler.finish_batch(txid, chain, app_config)
                 logging.info('Broadcast transaction with txid %s', txid)
-
-                return txid
+                return (txid, token_id)
             except BroadcastError:
                 logging.warning(
                     'Failed broadcast reattempts. Trying to recreate transaction. This is attempt number %d',
@@ -43,9 +45,22 @@ class Issuer:
         logging.error('All attempts to broadcast failed. Try rerunning issuer.')
         raise BroadcastError('All attempts to broadcast failed. Try rerunning issuer.')
 
-    def updateIPFS(self, chain, app_config):
+    def update_token_uri(self, token_id, token_uri, app_config):
         """
-        Update IPFS link on smart contract
+        Update the tokenURI for the issued certificate batch
+        :return: transaction id
         """
-        txid = self.transaction_handler.ipfs_transaction(token_id, token_uri, blockchain_bytes, app_config)
+
+        for attempt_number in range(0, self.max_retry):
+            try:
+                txid = self.transaction_handler.update_token_uri(token_id, token_uri, app_config)
+                logging.info('Updating tokenURI field with ipfs link. Txid: %s', txid)
+                return txid
+            except BroadcastError:
+                    logging.warning(
+                        'Failed broadcast reattempts. Trying to recreate transaction. This is attempt number %d',
+                        attempt_number)
+        logging.error('All attempts to broadcast failed. Try rerunning issuer.')
+        raise BroadcastError('All attempts to broadcast failed. Try rerunning issuer.')
+
 
