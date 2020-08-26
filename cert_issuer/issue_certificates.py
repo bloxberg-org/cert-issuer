@@ -20,10 +20,10 @@ def issue(app_config, certificate_batch_handler, transaction_handler, recipient_
         certificate_batch_handler=certificate_batch_handler,
         transaction_handler=transaction_handler,
         max_retry=app_config.max_retry)
-    tx_id = issuer.issue(app_config.chain, app_config, recipient_address)
+    (tx_id, token_id) = issuer.issue(app_config.chain, app_config, recipient_address)
 
     certificate_batch_handler.post_batch_actions(app_config)
-    return tx_id
+    return (tx_id, token_id)
 
 def revoke_certificates(app_config, transaction_handler):
     # revocations are executed one hash at a time - balance is ensure before each tx
@@ -35,6 +35,12 @@ def revoke_certificates(app_config, transaction_handler):
     tx_id = revoker.revoke(app_config)
 
     return tx_id
+
+def update_token_uri(app_config, token_id, token_uri, transaction_handler):
+    issuer = Issuer(transaction_handler=transaction_handler, 
+        max_retry=app_config.max_retry)
+
+    issuer.update_token_uri(token_id, token_uri, app_config)
 
 def main(app_config):
     chain = app_config.chain
