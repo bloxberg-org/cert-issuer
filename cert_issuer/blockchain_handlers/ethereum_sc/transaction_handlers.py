@@ -62,4 +62,4 @@ class EthereumSCTransactionHandler(TransactionHandler):
         return txid
 
     def get_event_args(self, tx_hash, event):
-        return self.connector(tx_hash, event)
+        return self.connector.get_event_args(tx_hash, event)

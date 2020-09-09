@@ -15,7 +15,7 @@ class Issuer:
         self.transaction_handler = transaction_handler
         self.max_retry = max_retry
 
-    def issue(self, chain, app_config, recipient_address):
+    def issue(self, chain, app_config, recipient_address, token_uri="https://bloxberg.org"):
         """
         Issue the certificates on the blockchain
         :return:
@@ -26,7 +26,8 @@ class Issuer:
         recipient_address = Web3.toChecksumAddress(recipient_address)
         print(is_checksum_address(recipient_address))
 	    #change token_uri address
-        token_uri = "https://bloxberg.org"
+        print(token_uri)
+        #token_uri = "https://bloxberg.org"
         #blockchain_bytes = str(blockchain_bytes, 'latin-1')
         blockchain_bytes = blockchain_bytes.hex()
         for attempt_number in range(0, self.max_retry):
@@ -45,11 +46,13 @@ class Issuer:
         logging.error('All attempts to broadcast failed. Try rerunning issuer.')
         raise BroadcastError('All attempts to broadcast failed. Try rerunning issuer.')
 
-    def update_token_uri(self, token_id, token_uri, app_config):
+    def update_token_uri(self, chain, app_config, token_id, token_uri):
         """
         Update the tokenURI for the issued certificate batch
         :return: transaction id
         """
+        #token_id = token_array[0]
+        #token_uri = token_array[1]
 
         for attempt_number in range(0, self.max_retry):
             try:

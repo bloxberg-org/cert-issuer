@@ -31,13 +31,13 @@ class CertificateV3Handler(CertificateHandler):
             certificate_json = json.load(unsigned_cert_file)
         return certificate_json
 
-    def validate_certificate(self, certificate_metadata):
-        certificate_json = self._get_certificate_to_issue(certificate_metadata)
-        return validate_v3_alpha(certificate_json)
+    #def validate_certificate(self, certificate_metadata):
+    #    certificate_json = self._get_certificate_to_issue(certificate_metadata)
+    #    return validate_v3_alpha(certificate_json)
 
-    def sign_certificate(self, signer, certificate_metadata):
+    #def sign_certificate(self, signer, certificate_metadata):
         # TODO
-        return self.sign_certificate(signer, certificate_metadata)
+    #    return self.sign_certificate(signer, certificate_metadata)
 
 
 class CertificateWebV3Handler(CertificateHandler):
@@ -54,13 +54,13 @@ class CertificateWebV3Handler(CertificateHandler):
         certificate_json['signature'] = merkle_proof
         return certificate_json
 
-    def validate_certificate(self, certificate_metadata):
-        certificate_json = self._get_certificate_to_issue(certificate_metadata)
-        return validate_v3_alpha(certificate_json)
+    #def validate_certificate(self, certificate_metadata):
+    #    certificate_json = self._get_certificate_to_issue(certificate_metadata)
+    #    return validate_v3_alpha(certificate_json)
 
-    def sign_certificate(self, signer, certificate_metadata):
+    #def sign_certificate(self, signer, certificate_metadata):
         # TODO
-        return self.sign_certificate(signer, certificate_metadata)
+    #    return self.sign_certificate(signer, certificate_metadata)
 
 
 class CertificateBatchWebHandler(BatchHandler):

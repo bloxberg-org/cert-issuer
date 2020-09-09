@@ -11,7 +11,7 @@ if sys.version_info.major < 3:
     sys.exit(1)
 
 
-def issue(app_config, certificate_batch_handler, transaction_handler, recipient_address):
+def issue(app_config, certificate_batch_handler, transaction_handler, recipient_address, token_uri):
     certificate_batch_handler.pre_batch_actions(app_config)
 
     transaction_handler.ensure_balance()
@@ -20,7 +20,7 @@ def issue(app_config, certificate_batch_handler, transaction_handler, recipient_
         certificate_batch_handler=certificate_batch_handler,
         transaction_handler=transaction_handler,
         max_retry=app_config.max_retry)
-    (tx_id, token_id) = issuer.issue(app_config.chain, app_config, recipient_address)
+    (tx_id, token_id) = issuer.issue(app_config.chain, app_config, recipient_address, token_uri)
 
     certificate_batch_handler.post_batch_actions(app_config)
     return (tx_id, token_id)
@@ -36,11 +36,12 @@ def revoke_certificates(app_config, transaction_handler):
 
     return tx_id
 
-def update_token_uri(app_config, token_id, token_uri, transaction_handler):
-    issuer = Issuer(transaction_handler=transaction_handler, 
+def update_token_uri(app_config, certificate_batch_handler, transaction_handler, token_id, token_uri):
+    issuer = Issuer(certificate_batch_handler=certificate_batch_handler,
+transaction_handler=transaction_handler,
         max_retry=app_config.max_retry)
 
-    issuer.update_token_uri(token_id, token_uri, app_config)
+    issuer.update_token_uri(app_config.chain, app_config, token_id, token_uri)
 
 def main(app_config):
     chain = app_config.chain

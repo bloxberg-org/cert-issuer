@@ -65,6 +65,7 @@ def prepare_issuance_batch(unsigned_certs_dir, signed_certs_dir, blockchain_cert
     os.makedirs(blockchain_certs_work_dir, exist_ok=True)
 
     cert_info = collections.OrderedDict()
+
     input_file_pattern = str(os.path.join(unsigned_certs_work_dir, '*' + file_extension))
 
     matches = glob2.iglob(input_file_pattern, with_matches=True)
