@@ -90,9 +90,9 @@ def add_arguments(p):
                    help='ens_name that points to the smart contract to which to issue', env_var='ENS_NAME')
     p.add_argument('--revocation_list_file', required=False,
                    help='list of certificates or batches to be revokes', env_var='REVOCATION_LIST_FILE')
-    p.add_argument('--ens_registry_bloxberg', required=False, default="0xde68Fcf6814D81Ee910bf35703622571718E07a7",
+    p.add_argument('--ens_registry_bloxberg', required=False, default="0xb9F5cd1e334aCEd748bA1422b8a08c548ddBc73D",
                    help='ENS registry address on bloxberg', env_var='ENS_RESGISTRY_BLOXBERG')
-    p.add_argument('--ens_registry_mainnet', required=False, default="0xde68Fcf6814D81Ee910bf35703622571718E07a7",
+    p.add_argument('--ens_registry_mainnet', required=False, default="0xb9F5cd1e334aCEd748bA1422b8a08c548ddBc73D",
                    help='ENS registry address on bloxberg', env_var='ENS_RESGISTRY_MAINNET')
 
 def get_config():
