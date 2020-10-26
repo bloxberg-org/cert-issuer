@@ -24,9 +24,6 @@ class Issuer:
         blockchain_bytes = self.certificate_batch_handler.prepare_batch()
         
         recipient_address = Web3.toChecksumAddress(recipient_address)
-        print(is_checksum_address(recipient_address))
-	    #change token_uri address
-        print(token_uri)
         #token_uri = "https://bloxberg.org"
         #blockchain_bytes = str(blockchain_bytes, 'latin-1')
         blockchain_bytes = blockchain_bytes.hex()
