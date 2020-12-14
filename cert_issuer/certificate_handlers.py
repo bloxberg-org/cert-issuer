@@ -34,10 +34,17 @@ class CertificateV3Handler(CertificateHandler):
     def validate_certificate(self, certificate_metadata):
         with open(certificate_metadata.blockchain_cert_file_name, 'r') as signed_cert_file:
             certificate_json = json.load(signed_cert_file)
-        return validate_v3_alpha(certificate_json)
+        try:
+            valid = True
+            validate_v3_alpha(certificate_json)
+        except Exception:
+            logging.error('Validation of issued certificate failed')
+            valid = False
+        if (valid):
+            logging.info('Validation of issued certificate successful')
+
 
     #def sign_certificate(self, signer, certificate_metadata):
-        # TODO
     #    return self.sign_certificate(signer, certificate_metadata)
 
 
@@ -55,11 +62,10 @@ class CertificateWebV3Handler(CertificateHandler):
         certificate_json['signature'] = merkle_proof
         return certificate_json
 
-    #def validate_certificate(self, certificate_metadata):
-    #    return validate_v3_alpha(certificate_json)
+    def validate_certificate(self, certificate_json):
+        return validate_v3_alpha(certificate_json)
 
     #def sign_certificate(self, signer, certificate_metadata):
-        # TODO
     #    return self.sign_certificate(signer, certificate_metadata)
 
 
@@ -72,8 +78,8 @@ class CertificateBatchWebHandler(BatchHandler):
             proof = next(proof_generator)
             self.proof.append(self.certificate_handler.add_proof(metadata, proof))
 
-        #for cert in self.certificates_to_issue:
-        #    self.certificate_handler.validate_certificate(cert)
+        for cert in self.proof:
+            self.certificate_handler.validate_certificate(cert)
 
 
     def get_certificate_generator(self):
