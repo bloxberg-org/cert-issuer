@@ -6,7 +6,16 @@
 # cert-issuer
 
 The cert-issuer project issues blockchain certificates by creating a transaction from the issuing institution to the
-recipient on the Bitcoin blockchain that includes the hash of the certificate itself. 
+recipient on the Ethereum blockchain that includes the hash of the certificate itself. 
+
+Currently, we support issuing to the bloxberg blockchain network using the BLIPS-2 Standard for Research Object Certification.
+
+The instructions below pertain mainly to using the cert-issuer via CLI. For the API interface, please view our cert-api repository.
+
+## Generating unsigned certificates
+
+In order to create unsigned certificates, you must first follow the instructions in our (cert-tools)[https://github.com/bloxberg-org/cert-tools] repository
+
 
 ## Issuing certificates
 
@@ -21,10 +30,10 @@ recipient on the Bitcoin blockchain that includes the hash of the certificate it
     ```
     # To use a sample unsigned certificate as follows:
     cp /cert-issuer/examples/data-testnet/unsigned_certificates/3bc1a96a-3501-46ed-8f75-49612bbac257.json /cert-issuer/data/unsigned_certificates/ 
-    
-    # If you created your own unsigned certificate using cert-tools (assuming you placed it under data/unsigned_certificates):
-    cp <cert-issuer-home>/data/unsigned_certificates/<your-cert-guid>.json /etc/cert-issuer/data/unsigned_certificates/
     ```
+    
+    ### If you created your own unsigned certificate using cert-tools (assuming you placed it under cert-tools/sample_data/unsigned_certificates), you can also configure the conf.ini field, unsigned_certificates, in Step 4 to the cert-tools unsigned directory path.
+
 
 3. Make sure you have enough ETH in your issuing address.
 
@@ -62,17 +71,15 @@ recipient on the Bitcoin blockchain that includes the hash of the certificate it
     
     #default path for revocations - currently revocations aren't supported.
     revocation_list_file=./revocations.json
-    
 
     no_safe_mode
     ```
     
-4. Your Blockchain certificates are located in `/etc/cert-issuer/data/blockchain_certificates`. Copy these to your local machine, and add them to cert-viewer's `cert_data` folder to see your certificates in the Certificate Viewer.
+4. Lastly, we can issue the certificates by running 
 
-```
-docker ps  // shows the docker containerId
-docker cp <containerId>:/etc/cert-issuer/data/blockchain_certificates <localPath>/cert-viewer/cert_data
-```
+   ```
+   python cert-issuer -c conf.ini
+   ```
 
 # How batch issuing works
 
@@ -142,59 +149,6 @@ Currently, we support issuing to the bloxberg blockchain network using the BLIPS
  2. Go through the create wallet process
     - Store the private key in a secure location
     - Copy the public key to the `issuing_address` value in conf.ini
-
-#### Obtaining testnet coins
-
-- Request some testnet coins by searching for “Testnet Faucet”, and entering your issuing public address. It may take a while for the transaction to be confirmed.
-- Important: make sure you follow the guidance of the testnet faucet provider!
-
-
-## Configuring cert-issuer 
-
-Edit your conf.ini file (the config file for this application). 
-
-```
-issuing_address = <issuing-address>
-
-# issuer URL / DID
-verification_method = <verification-method>
-
-chain=<bitcoin_regtest|bitcoin_testnet|bitcoin_mainnet|ethereum_bloxberg|ethereum_mainnet|mockchain>
-    
-usb_name = </Volumes/path-to-usb/>
-key_file = <file-you-saved-pk-to>
-
-unsigned_certificates_dir=<path-to-your-unsigned-certificates>
-blockchain_certificates_dir=<path-to-your-blockchain-certificates>
-work_dir=<path-to-your-workdir>
-
-no_safe_mode
-
-# advanced: uncomment the following line if you're running a bitcoin node
-# bitcoind
-```
-
-Notes:
-  - The `bitcoind` option is technically not required in `regtest` mode. `regtest` mode _only_ works with a local bitcoin node. The quick start in docker brushed over this detail by installing a regtest-configured bitcoin node in the docker container.
-  - The Ethereum option does not support a local (test)node currently. The issuer will broadcast the transaction via the Etherscan API.
-
-## Issuing
-
-1. Add your certificates to data/unsigned_certs/
-
-2. If you've installed the package you can issue certificates by running:
-
-```
-python cert-issuer -c conf.ini
-```
-
-3. Output
-  - The Blockchain Certificates will be located in data/blockchain_certificates.
-  - If you ran in the mainnet or testnet mode, you can also see your transaction on a live blockchain explorer. 
-    - For Bitcoin, Blockr.io has explorers for both [testnet](https://tbtc.blockr.io/) and [mainnet](https://blockr.io/).
-    - For Ethereum, Etherscan has explorers for [bloxberg](https://bloxberg.etherscan.io/) and [mainnet](https://etherscan.io/)
-    - The transaction id is located in the Blockchain Certificate under `signature.anchors[0].sourceId`
-
 
 # Unit tests
 
@@ -281,17 +235,7 @@ The files in examples/data-testnet contain results of previous runs.
 
 ## Checking transaction status
 
-You can validate your transaction before sending by looking it up by rawtx at blockchain.info. Example:
-
-   ```
-   curl 'https://blockchain.info/rawtx/45a9306dfe99820eb346bb17ae0b64173ac11cac2d0e4227c7a7cacbcc0bad31?cors=true'
-   ```
-
-For an Ethereum transaction, you'll need to use a different explorer, which might require an API key for raw JSON
-output.  To view a transaction in a web browser, you might try something like this:
-
-- Ethereum Mainnet: https://etherscan.io/tx/0xf537d81667c8011e34e1f450e18fd1c5a8a10c770cd0acdc91a79746696f36a3
-- Ethereum Bloxberg (testnet): https://bloxberg.etherscan.io/tx/0xf537d81667c8011e34e1f450e18fd1c5a8a10c770cd0acdc91a79746696f36a3
+- Ethereum Bloxberg: https://blockexplorer.bloxberg.org and search for the tx id.
 
 ## Mac scrypt problems
 
@@ -305,6 +249,6 @@ fatal error: 'openssl/aes.h'
 
 # Contact
 
-Contact us at [the Blockcerts community forum](http://community.blockcerts.org/).
+Contact us at info@bloxberg.org for more information.
 
 
