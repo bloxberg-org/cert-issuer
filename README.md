@@ -32,7 +32,7 @@ In order to create unsigned certificates, you must first follow the instructions
     cp /cert-issuer/examples/data-testnet/unsigned_certificates/3bc1a96a-3501-46ed-8f75-49612bbac257.json /cert-issuer/data/unsigned_certificates/ 
     ```
     
-    ### If you created your own unsigned certificate using cert-tools (assuming you placed it under cert-tools/sample_data/unsigned_certificates), you can also configure the conf.ini field, unsigned_certificates, in Step 4 to the cert-tools unsigned directory path to avoid copying the files.
+    #### If you created your own unsigned certificate using cert-tools (assuming you placed it under cert-tools/sample_data/unsigned_certificates), you can also configure the conf.ini field, unsigned_certificates, in Step 4 to the cert-tools unsigned directory path to avoid copying the files.
 
 
 3. Make sure you have enough ETH in your issuing address.
