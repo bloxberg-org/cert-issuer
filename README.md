@@ -10,7 +10,13 @@ recipient on the Bitcoin blockchain that includes the hash of the certificate it
 
 ## Issuing certificates
 
-1. Add your certificates to /cert-issuer/data/unsigned_certificates/. 
+1. Create a python environment and run the following command in the terminal:
+
+   ```
+   python setup.py install experimental --blockchain=ethereum_smart_contract
+   ```
+
+2. Add your certificates generated from cert-tools repository to /cert-issuer/data/unsigned_certificates/. 
 
     ```
     # To use a sample unsigned certificate as follows:
@@ -20,14 +26,45 @@ recipient on the Bitcoin blockchain that includes the hash of the certificate it
     cp <cert-issuer-home>/data/unsigned_certificates/<your-cert-guid>.json /etc/cert-issuer/data/unsigned_certificates/
     ```
 
-2. Make sure you have enough ETH in your issuing address.
+3. Make sure you have enough ETH in your issuing address.
 
-    a. Go to https://faucet.bloxberg.org and enter your bloxberg address to receive bergs.
+    a. Go to https://myetherwallet.com and create an ethereum public and private address. Make sure to store the private address in a secure location.
+    b. Go to https://faucet.bloxberg.org and enter your bloxberg public address to receive bergs. 
 
-3. Issue the certificates on the blockchain
+4. Configure the settings for cert-issuer in conf.ini
 
     ```
-    cert-issuer -c /etc/cert-issuer/conf.ini
+    # public address
+    issuing_address = <issuing-address>
+
+    # issuer URL / DID / Public Key
+    verification_method = <verification_method>
+    
+    # Chain certificates will issue to
+    chain=<ethereum_bloxberg>
+    
+    # Text file containing your private key
+    usb_name = </Volumes/path-to-usb/>
+    key_file = <file-you-saved-pk-to>
+    
+    #Path to certificate files, set to default but can be changed
+    unsigned_certificates_dir=./data/unsigned_certificates
+    blockchain_certificates_dir=./data/blockchain_certificates
+    
+    #use an ERC721 smart contract for issuance
+    issuing_method = smart_contract
+  
+    #node url to broadcast transactions
+    node_url = https://core.bloxberg.org
+    
+    #ens_name is set by the cert-deployer repository
+    ens_name = <mpdl.berg>
+    
+    #default path for revocations - currently revocations aren't supported.
+    revocation_list_file=./revocations.json
+    
+
+    no_safe_mode
     ```
     
 4. Your Blockchain certificates are located in `/etc/cert-issuer/data/blockchain_certificates`. Copy these to your local machine, and add them to cert-viewer's `cert_data` folder to see your certificates in the Certificate Viewer.
@@ -95,7 +132,7 @@ python setup.py install experimental --blockchain=ethereum_smart_contract
 
 ### Create an Ethereum issuing address
 
-Currently Blockcerts just supports issuing to the Bloxberg Ethereum testnet, and the Ethereum mainnet. In Ethereum a public/private key pair is the same accross all test/main networks.
+Currently, we support issuing to the bloxberg blockchain network using the BLIPS-2 Standard for Research Object Certification.
 
  __These steps involve storing secure information on a USB. Do not plug in this USB when your computer's wifi is on.__
  
@@ -103,7 +140,7 @@ Currently Blockcerts just supports issuing to the Bloxberg Ethereum testnet, and
     - Go to https://www.myetherwallet.com/.
     - For the best security turn off your connection to the internet when you are on the create wallet page.
  2. Go through the create wallet process
-    - Store the private key on the USB stick and unplug it afterwards.
+    - Store the private key in a secure location
     - Copy the public key to the `issuing_address` value in conf.ini
 
 #### Obtaining testnet coins
