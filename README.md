@@ -14,7 +14,7 @@ The instructions below pertain mainly to using the cert-issuer via CLI. For the 
 
 ## Generating unsigned certificates
 
-In order to create unsigned certificates, you must first follow the instructions in our (cert-tools)[https://github.com/bloxberg-org/cert-tools] repository
+In order to create unsigned certificates, you must first follow the instructions in our [cert-tools](https://github.com/bloxberg-org/cert-tools) repository
 
 
 ## Issuing certificates
