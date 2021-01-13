@@ -18,7 +18,7 @@ In order to create unsigned certificates, you must first follow the instructions
 
 ## Deploying smart contract
 
-Before issuing certificates, you must also
+Before issuing certificates, you must also ensure that an associated smart contract is deployed to the bloxberg blockchain that your address has control over. Please follow the instructions located in [cert-deployer](https://github.com/bloxberg-org/cert-deployer) to deploy the contract.
 
 
 ### Issuing certificates
