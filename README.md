@@ -6,7 +6,7 @@
 # cert-issuer
 
 The cert-issuer project issues blockchain certificates by creating a transaction from the issuing institution to the
-recipient on the bloxberg blockchain that includes the hash of the certificate itself. 
+recipient on the Ethereum blockchain that includes the hash of the certificate itself. 
 
 Currently, we support issuing to the bloxberg blockchain network using the BLIPS-2 Standard for Research Object Certification.
 
@@ -16,8 +16,12 @@ The instructions below pertain mainly to using the cert-issuer via CLI. For the 
 
 In order to create unsigned certificates, you must first follow the instructions in our [cert-tools](https://github.com/bloxberg-org/cert-tools) repository. The below instructions assume you have already a batch of unsigned certificates generated.
 
+## Deploying smart contract
 
-## Issuing certificates
+Before issuing certificates, you must also
+
+
+### Issuing certificates
 
 1. Create a python environment and run the following command in the terminal:
 
@@ -25,42 +29,39 @@ In order to create unsigned certificates, you must first follow the instructions
    python setup.py install experimental --blockchain=ethereum_smart_contract
    ```
 
-2. Add your certificates generated from cert-tools repository to /cert-issuer/data/unsigned_certificates/. 
+2. Configure the unsigned_certificates_dir variable in the conf.ini file to the unsigned certificates directory. Alternatively, you can also specify the directory created from the [cert-tools](https://github.com/bloxberg-org/cert-tools) repository to avoid copying the unsigned certificates.
 
     ```
     # To use a sample unsigned certificate as follows:
     cp /cert-issuer/examples/data-testnet/unsigned_certificates/3bc1a96a-3501-46ed-8f75-49612bbac257.json /cert-issuer/data/unsigned_certificates/ 
     ```
     
-    #### If you created your own unsigned certificate using cert-tools (assuming you placed it under cert-tools/sample_data/unsigned_certificates), you can also configure the conf.ini field, unsigned_certificates, in Step 4 to the cert-tools unsigned directory path to avoid copying the files.
-
-
 3. Make sure you have enough ETH in your issuing address.
 
-    a. Go to https://myetherwallet.com and create an ethereum public and private address. Make sure to store the private address in a secure location.
-    b. Go to https://faucet.bloxberg.org and enter your bloxberg public address to receive bergs. 
+    a. Go to https://myetherwallet.com and create a public and private address. Make sure to store the private address in a secure location.
+    b. Go to https://faucet.bloxberg.org and enter your created public address to receive bergs. 
 
-4. Configure the settings for cert-issuer in conf.ini
+4. Further configure the settings for cert-issuer in conf.ini
 
     ```
     # public address
     issuing_address = <issuing-address>
 
-    # issuer URL / DID / Public Key
+    # issuer Public Key
     verification_method = <verification_method>
     
     # Chain certificates will issue to
-    chain=<ethereum_bloxberg>
+    chain=ethereum_bloxberg
     
     # Text file containing your private key
-    usb_name = </Volumes/path-to-usb/>
-    key_file = <file-you-saved-pk-to>
+    usb_name = </Volumes/path-to-secure-location/>
+    key_file = <file-you-saved-private-key-to>
     
     #Path to certificate files, set to default but can be changed
     unsigned_certificates_dir=./data/unsigned_certificates
     blockchain_certificates_dir=./data/blockchain_certificates
     
-    #use an ERC721 smart contract for issuance
+    #use an ERC721 smart contract for issuance, leave this as default
     issuing_method = smart_contract
   
     #node url to broadcast transactions
