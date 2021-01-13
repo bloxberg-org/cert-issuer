@@ -1,7 +1,7 @@
 import json
 import logging
 
-from cert_schema import normalize_jsonld, validate_v3_alpha
+from cert_schema import normalize_jsonld
 from cert_issuer import helpers
 from pycoin.serialize import b2h
 from cert_issuer.models import CertificateHandler, BatchHandler
@@ -140,8 +140,8 @@ class CertificateBatchHandler(BatchHandler):
             proof = next(proof_generator)
             self.certificate_handler.add_proof(metadata, proof)
         # validate batch
-        for _, metadata in self.certificates_to_issue.items():
-            self.certificate_handler.validate_certificate(metadata)
+        #for _, metadata in self.certificates_to_issue.items():
+        #    self.certificate_handler.validate_certificate(metadata)
 
     def _process_directories(self, config):
         unsigned_certs_dir = config.unsigned_certificates_dir

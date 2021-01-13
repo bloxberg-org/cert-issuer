@@ -11,6 +11,7 @@ from cert_issuer import helpers
 
 
 def hash_byte_array(data):
+    #Upgrade to blake3 for faster speed?
     hashed = hashlib.sha256(data).hexdigest()
     return hashed
 

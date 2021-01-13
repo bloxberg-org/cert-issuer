@@ -57,7 +57,7 @@ def main(app_config):
     else:
         from cert_issuer.blockchain_handlers import bitcoin
         certificate_batch_handler, transaction_handler, connector = bitcoin.instantiate_blockchain_handlers(app_config)
-    return issue(app_config, certificate_batch_handler, transaction_handler)
+    return issue(app_config, certificate_batch_handler, transaction_handler, app_config.issuing_address, token_uri="https://bloxberg.org")
 
 
 if __name__ == '__main__':
