@@ -6,7 +6,7 @@
 # cert-issuer
 
 The cert-issuer project issues blockchain certificates by creating a transaction from the issuing institution to the
-recipient on the Ethereum blockchain that includes the hash of the certificate itself. 
+recipient on the bloxberg blockchain that includes the hash of the certificate itself. 
 
 Currently, we support issuing to the bloxberg blockchain network using the BLIPS-2 Standard for Research Object Certification.
 
