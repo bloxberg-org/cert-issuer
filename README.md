@@ -44,8 +44,6 @@ Before issuing certificates, you must also ensure that an associated smart contr
 
 1. Further configure the settings for cert-issuer in `conf.ini`. The private key file [should be](https://eth-account.readthedocs.io/en/latest/eth_account.html#eth_account.account.Account.from_key) a raw private key: a hex str, bytes or int
 
-1. Copy the folder `cert_issuer/blockchain_handlers/ethereum_sc/data` to `<virtualenv-name>/lib/<python-version>/site-packages/cert_issuer-3.0.0a3-py3.8.egg/cert_issuer/blockchain_handlers/ethereum_sc`.
-
 1. Lastly, we can issue the certificates by running
 
    ```

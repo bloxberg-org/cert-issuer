@@ -68,6 +68,7 @@ setup(
     description='Issues blockchain certificates using the bloxberg blockchain',
     long_description=long_description,
     long_description_content_type='text/markdown',
+    #package_data={'': ['ens_registry_abi.json', 'ens_resolver_abi.json']},
     include_package_data=True,
     entry_points={
         'console_scripts': [

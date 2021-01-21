@@ -1,1 +1,3 @@
 include LICENSE *.md *.txt conf_regtest.ini
+include cert_issuer/blockchain_handlers/ethereum_sc/data/ens_registry_abi.json
+include cert_issuer/blockchain_handlers/ethereum_sc/data/ens_resolver_abi.json
